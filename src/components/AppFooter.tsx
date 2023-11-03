@@ -1,12 +1,24 @@
+import { useState } from "react";
+
+type User = {
+  fullname: string;
+};
+
 function AppFooter() {
-  const company = "Brook Saranyapong";
+  // let company = "Brook Saranyapong";
+  const [company, setCompany] = useState("Typscript");
+  // const [user, setUser] = useState<User>({ fullname: "John Doe" });
+  const [user, setUser] = useState<User | null>(null);
   const isShow = false;
 
   const showMsg = () => {
-    alert("Hello TypeScript");
+    // alert("Hello TypeScript");
+    setCompany("React");
+    setUser({ fullname: "John Doe" });
   };
   return (
     <>
+      {user && <p>User: {user.fullname}</p>}
       <button onClick={showMsg}>Click Me!</button>
       <p>created by {company}</p>
       <p>{new Date().getFullYear()}</p>
