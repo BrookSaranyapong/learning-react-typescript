@@ -1,8 +1,9 @@
 function AppFooter() {
+  const company = "Brook Saranyapong";
   return (
     <>
-      <p>created by brook Saranyapong</p>
-      <p>created by brook Saranyapong</p>;
+      <p>created by {company}</p>
+      <p>{new Date().getFullYear()}</p>
     </>
   );
 }
