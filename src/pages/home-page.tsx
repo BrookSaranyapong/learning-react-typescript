@@ -837,7 +837,8 @@ const Illustration = (props: IconProps) => {
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const authState = useAppSelector(selectAuthState)
+  const authState = useAppSelector(selectAuthState);
+  const { profile, email } = useAppSelector(selectAuthState);
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -846,8 +847,12 @@ export default function HomePage() {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 20, md: 28 }}
       >
-        <p className="myTitle">ยินดีต้อนรับ {authState.profile}</p>
-        <p className={homepageStyle.title}>Hello</p>
+        <p className="myTitle">
+          ยินดีต้อนรับ {authState.profile} {authState.email}
+        </p>
+        <p className={homepageStyle.title}>
+          Hello {profile} {email}
+        </p>
         <Heading
           fontWeight={600}
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
