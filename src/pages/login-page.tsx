@@ -13,7 +13,7 @@ import {
   FormErrorMessage,
   useToast,
 } from "@chakra-ui/react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { LoginFormInput } from "../interfaces/login-form-input.interface";
 import * as yup from "yup";
@@ -31,11 +31,7 @@ export default function LoginPage() {
       .required("ป้อนข้อมูลรหัสผ่านด้วย")
       .min(3, "รหัสต้องมีอย่างน้อย 3 ตัวอักษรขึ้นไป"),
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormInput>({
+  const { register, handleSubmit, formState: { errors, isSubmitting },} = useForm<LoginFormInput>({
     resolver: yupResolver(schema),
     mode: "all",
   });
