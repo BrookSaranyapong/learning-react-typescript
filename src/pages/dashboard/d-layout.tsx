@@ -19,20 +19,18 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Link,
 } from "@chakra-ui/react";
 import {
   FiHome,
   FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 interface LinkItemProps {
   name: string;
@@ -43,6 +41,7 @@ interface LinkItemProps {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactNode;
+  href: string;
 }
 
 interface MobileProps extends FlexProps {
@@ -55,7 +54,7 @@ interface SidebarProps extends BoxProps {
 
 const LinkItems: Array<LinkItemProps> = [
   { name: "หน้าหลัก", icon: FiHome, href: "/dashboard" },
-  { name: "ห้องประชุม", icon: FiTrendingUp, href: "dashboard/room" },
+  { name: "ห้องประชุม", icon: FiTrendingUp, href: "/dashboard/room" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -77,7 +76,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} href={link.href}>
           {link.name}
         </NavItem>
       ))}
@@ -85,11 +84,11 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
   return (
-    <Box
-      as="a"
-      href="#"
+    <Link
+      as={NavLink}
+      to={href}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -118,7 +117,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         )}
         {children}
       </Flex>
-    </Box>
+    </Link>
   );
 };
 
