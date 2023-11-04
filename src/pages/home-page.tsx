@@ -11,6 +11,8 @@ import {
 
 import homepageStyle from "../styles/homepage.module.css";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux-toolkit/hooks";
+import { selectAuthState } from "../redux-toolkit/auth/auth-slice";
 
 const Illustration = (props: IconProps) => {
   return (
@@ -835,6 +837,7 @@ const Illustration = (props: IconProps) => {
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const authState = useAppSelector(selectAuthState)
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -843,7 +846,7 @@ export default function HomePage() {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 20, md: 28 }}
       >
-        <p className="myTitle">ยินดีต้อนรับ</p>
+        <p className="myTitle">ยินดีต้อนรับ {authState.profile}</p>
         <p className={homepageStyle.title}>Hello</p>
         <Heading
           fontWeight={600}
