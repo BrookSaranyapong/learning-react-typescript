@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import homepageStyle from "../styles/homepage.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Illustration = (props: IconProps) => {
   return (
@@ -833,6 +834,7 @@ const Illustration = (props: IconProps) => {
 };
 
 export default function HomePage() {
+  const navigate = useNavigate();
   return (
     <Container maxW={"5xl"}>
       <Stack
@@ -866,10 +868,19 @@ export default function HomePage() {
             colorScheme={"orange"}
             bg={"orange.400"}
             _hover={{ bg: "orange.500" }}
+            onClick={() => {
+              navigate("/login");
+            }}
           >
             เข้าสู่ระบบ
           </Button>
-          <Button rounded={"full"} px={6}>
+          <Button
+            rounded={"full"}
+            px={6}
+            onClick={() => {
+              navigate("/about");
+            }}
+          >
             เกี่ยวกับเรา
           </Button>
         </Stack>
