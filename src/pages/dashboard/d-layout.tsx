@@ -30,7 +30,7 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 interface LinkItemProps {
   name: string;
@@ -42,6 +42,7 @@ interface NavItemProps extends FlexProps {
   icon: IconType;
   children: ReactNode;
   href: string;
+  active?: string;
 }
 
 interface MobileProps extends FlexProps {
@@ -58,6 +59,8 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <Box
       transition="3s ease"
@@ -76,7 +79,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} href={link.href}>
+        <NavItem
+          key={link.name}
+          icon={link.icon}
+          href={link.href}
+          active={location.pathname === link.href ? "menuActive" : ""}
+        >
           {link.name}
         </NavItem>
       ))}
@@ -84,7 +92,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, href, active, ...rest }: NavItemProps) => {
   return (
     <Link
       as={NavLink}
@@ -93,6 +101,7 @@ const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
       _focus={{ boxShadow: "none" }}
     >
       <Flex
+        className={active}
         align="center"
         p="4"
         mx="4"

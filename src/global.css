@@ -2,3 +2,7 @@
   color: orange;
   font-size: 3rem;
 }
+
+.menuActive {
+  background-color: deepskyblue;
+}
