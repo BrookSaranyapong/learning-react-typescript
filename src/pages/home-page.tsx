@@ -9,6 +9,8 @@ import {
   IconProps,
 } from "@chakra-ui/react";
 
+import homepageStyle from "../styles/homepage.module.css";
+
 const Illustration = (props: IconProps) => {
   return (
     <Icon
@@ -839,6 +841,8 @@ export default function HomePage() {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 20, md: 28 }}
       >
+        <p className="myTitle">ยินดีต้อนรับ</p>
+        <p className={homepageStyle.title}>Hello</p>
         <Heading
           fontWeight={600}
           fontSize={{ base: "3xl", sm: "4xl", md: "6xl" }}
