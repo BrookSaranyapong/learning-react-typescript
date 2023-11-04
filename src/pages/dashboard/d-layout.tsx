@@ -60,7 +60,6 @@ const LinkItems: Array<LinkItemProps> = [
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <Box
       transition="3s ease"
