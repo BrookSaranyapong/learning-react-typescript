@@ -37,6 +37,7 @@ import { Outlet } from "react-router-dom";
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  href: string;
 }
 
 interface NavItemProps extends FlexProps {
@@ -53,11 +54,8 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "หน้าหลัก", icon: FiHome, href: "/dashboard" },
+  { name: "ห้องประชุม", icon: FiTrendingUp, href: "dashboard/room" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
