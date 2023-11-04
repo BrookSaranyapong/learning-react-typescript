@@ -10,21 +10,45 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { LoginFormInput } from "../interfaces/login-form-input.interface";
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 export default function LoginPage() {
+  const toast = useToast();
   const navigate = useNavigate();
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .required("ป้อนข้อมูลอีเมล์ด้วย")
+      .email("รูปแบบอีเมล์ไม่ถูกต้อง"),
+    password: yup
+      .string()
+      .required("ป้อนข้อมูลรหัสผ่านด้วย")
+      .min(3, "รหัสต้องมีอย่างน้อย 3 ตัวอักษรขึ้นไป"),
+  });
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormInput>();
-  // const onSubmit: SubmitHandler<LoginFormInput> = (data) => console.log(data)
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormInput>({
+    resolver: yupResolver(schema),
+    mode: "all",
+  });
   const onSubmit = (data: LoginFormInput) => {
-    console.log(data);
+    // console.log(data);
+    toast({
+      title: "เข้าสู่ระบบสำเร็จ",
+      description: JSON.stringify(data),
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+      position: "top",
+    });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -38,7 +62,10 @@ export default function LoginPage() {
           <Stack align={"center"}>
             <Heading fontSize={"4xl"}>Sign in to your account</Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool <Text color={"blue.400"}>features</Text>{" "}
+              to enjoy all of our cool{" "}
+              <Text as={"span"} color={"blue.400"}>
+                features
+              </Text>{" "}
               ✌️
             </Text>
           </Stack>
@@ -49,13 +76,22 @@ export default function LoginPage() {
             p={8}
           >
             <Stack spacing={4}>
-              <FormControl id="email">
+              <FormControl id="email" isInvalid={errors.email ? true : false}>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" {...register("email")} />
+                <FormErrorMessage>
+                  {errors.email && errors.email?.message}
+                </FormErrorMessage>
               </FormControl>
-              <FormControl id="password">
+              <FormControl
+                id="password"
+                isInvalid={errors.password ? true : false}
+              >
                 <FormLabel>Password</FormLabel>
                 <Input type="password" {...register("password")} />
+                <FormErrorMessage>
+                  {errors.password && errors.password?.message}
+                </FormErrorMessage>
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -73,6 +109,8 @@ export default function LoginPage() {
                   _hover={{
                     bg: "blue.500",
                   }}
+                  isLoading={isSubmitting}
+                  loadingText="กำลังเข้าระบบ..."
                 >
                   Login
                 </Button>
