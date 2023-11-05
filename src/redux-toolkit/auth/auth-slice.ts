@@ -1,14 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { LoginResponse } from "../../interfaces/login.type";
+import { loginThunk } from "./auth-thunk";
 
 export interface AuthState {
-    profile: string
-    email: string
+    profile: string;
+    email: string;
+    loginResponse: LoginResponse | null;
 }
 
 const initialState: AuthState = {
-    profile: 'John Doe',
-    email: 'john@gmail.com'
+    profile: 'John Doe Example',
+    email: 'john@gmail.com Example',
+    loginResponse: null
 }
 
 export const authSlice = createSlice({
@@ -16,9 +20,14 @@ export const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         updateProfileAction: (state) => {
-            state.profile = 'Mary Doe';
-            state.email = 'mary@gmail.com'
+            state.profile = 'Mary Doe Example';
+            state.email = 'mary@gmail.com Example'
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginThunk.fulfilled, (state,action: PayloadAction<LoginResponse | null>) => {
+            state.loginResponse = action.payload;
+        })
     },
 })
 
