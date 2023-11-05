@@ -30,7 +30,7 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
-import { NavLink, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../services/auth.service";
 
 interface LinkItemProps {
