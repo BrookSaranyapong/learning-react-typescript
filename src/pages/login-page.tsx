@@ -10,17 +10,24 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  FormErrorMessage,
-  useToast,
+  FormErrorMessage
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { LoginFormInput } from "../interfaces/login-form-input.type";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAppDispatch } from "../redux-toolkit/hooks";
+import { loginThunk } from "../redux-toolkit/auth/auth-thunk";
+import { LoginErrorResponse } from "../interfaces/login.type";
+import useCustomToast from "../components/Toast";
 export default function LoginPage() {
-  const toast = useToast();
+  const showToast = useCustomToast();
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
+  // schema validation
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -31,20 +38,22 @@ export default function LoginPage() {
       .required("ป้อนข้อมูลรหัสผ่านด้วย")
       .min(3, "รหัสต้องมีอย่างน้อย 3 ตัวอักษรขึ้นไป"),
   });
+
   const { register, handleSubmit, formState: { errors, isSubmitting },} = useForm<LoginFormInput>({
     resolver: yupResolver(schema),
     mode: "all",
   });
-  const onSubmit = (data: LoginFormInput) => {
-    // console.log(data);
-    toast({
-      title: "เข้าสู่ระบบสำเร็จ",
-      description: JSON.stringify(data),
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-      position: "top",
-    });
+
+  const onSubmit = async(data: LoginFormInput) => {
+    try {
+      const result = await dispatch(loginThunk(data)).unwrap();
+      console.log(result.access_token);
+      showToast('success', 'เข้าระบบสำเร็จ');
+    } catch (error: any) {
+      let err: LoginErrorResponse = error;
+      showToast('error', err.message);
+    }
+    
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
