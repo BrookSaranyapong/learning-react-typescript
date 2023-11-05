@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppDispatch } from "../redux-toolkit/hooks";
 import { loginThunk } from "../redux-toolkit/auth/auth-thunk";
 import { LoginErrorResponse } from "../interfaces/login.type";
-import useCustomToast from "../components/Toast";
+import useCustomToast from "../hooks/useCustomToast";
 export default function LoginPage() {
   const showToast = useCustomToast();
   const dispatch = useAppDispatch();
