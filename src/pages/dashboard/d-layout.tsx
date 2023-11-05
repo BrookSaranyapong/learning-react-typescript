@@ -30,8 +30,15 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { logout } from "../../services/auth.service";
+import { User } from "../../interfaces/profile.type";
 
 interface LinkItemProps {
   name: string;
@@ -132,6 +139,7 @@ const NavItem = ({ icon, children, href, active, ...rest }: NavItemProps) => {
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const navigate = useNavigate();
+  const user = useLoaderData() as User;
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -188,9 +196,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">id : {user.id}</Text>
+                  <Text fontSize="sm">{user.name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {user.role}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
@@ -203,13 +212,20 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
+              {user.role === "admin" && (
+                <MenuItem>สำหรับผู้ดูแลเท่านั้น</MenuItem>
+              )}
+              {/* <MenuItem>Settings</MenuItem> */}
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem onClick={() => {
-                logout();
-                navigate('/');
-              }}>Log out</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  logout();
+                  navigate("/");
+                }}
+              >
+                Log out
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
