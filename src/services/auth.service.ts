@@ -9,8 +9,8 @@ export async function login(email: string, password: string): Promise<AxiosRespo
     });
 }
 
-export function logout() {
-
+export function logout(): void {
+    localStorage.removeItem('token');
 }
 
 export function getProfile() {
