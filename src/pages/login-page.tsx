@@ -48,7 +48,7 @@ export default function LoginPage() {
     try {
       const result = await dispatch(loginThunk(data)).unwrap();
       console.log(result.access_token);
-      showToast('success', 'เข้าระบบสำเร็จ');
+      showToast('success', 'เข้าสู่ระบบสำเร็จ');
     } catch (error: any) {
       let err: LoginErrorResponse = error;
       showToast('error', err.message);
