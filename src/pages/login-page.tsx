@@ -47,7 +47,10 @@ export default function LoginPage() {
   const onSubmit = async(data: LoginFormInput) => {
     try {
       const result = await dispatch(loginThunk(data)).unwrap();
-      console.log(result.access_token);
+      // console.log(result.access_token);
+      if(result.access_token){
+        navigate('/dashboard');
+      }
       showToast('success', 'เข้าสู่ระบบสำเร็จ');
     } catch (error: any) {
       let err: LoginErrorResponse = error;
