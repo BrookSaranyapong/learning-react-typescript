@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { LoginFormInput } from "../interfaces/login-form-input.interface";
+import { LoginFormInput } from "../interfaces/login-form-input.type";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 export default function LoginPage() {
